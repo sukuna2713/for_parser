@@ -1,0 +1,32 @@
+===original=== start:167, end:305
+for (i=0; i< len; i++){
+    #pragma omp parallel for private(j )
+    for (j=0; j<len; j++){
+      a[i][j] = (i * len + j + 0.5);
+    }
+  }
+===original=== start:236, end:301
+for (j=0; j<len; j++){
+      a[i][j] = (i * len + j + 0.5);
+    }
+===original=== start:309, end:448
+for (i = 0; i < len - 1; i += 1) {
+    #pragma omp parallel for
+    for (j = 0; j < len ; j += 1) {
+      a[i][j] += a[i + 1][j];
+    }
+  }
+===original=== start:377, end:444
+for (j = 0; j < len ; j += 1) {
+      a[i][j] += a[i + 1][j];
+    }
+===original=== start:452, end:541
+for (i=0; i< len; i++){
+    for (j=0; j<len; j++){
+      printf("%lf",a[i][j]);
+    }
+  }
+===original=== start:480, end:537
+for (j=0; j<len; j++){
+      printf("%lf",a[i][j]);
+    }
