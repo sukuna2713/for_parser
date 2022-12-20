@@ -26,10 +26,10 @@ class AstGenerator(object):
         pragma = [token for token in tokens if isinstance(token, PragmaState)]
         for_state = [token for token in tokens if isinstance(token, For)]
         if len(pragma) > 0:
-            print("for with pragma")
+            #print("for with pragma")
             return ForWhole(pragma[0], for_state[0], True)
         else:
-            print("for without pragma")
+            #print("for without pragma")
             return ForWhole(None, for_state[0], False)
 
     def make_nested(self, tokens):
@@ -41,6 +41,5 @@ class AstGenerator(object):
         return Others(tokens)
 
     def make_program(self, tokens):
-        # print(original_string)
         tokens = tokens.asList()
         return Program(tokens)

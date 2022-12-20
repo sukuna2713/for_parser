@@ -3,6 +3,7 @@ import pyparsing as pp
 from nodes.nodes_ast import AstGenerator
 from nodes.nodes_nodes import For, ForWhole, NestedState
 import re
+import json
 
 ast = AstGenerator()
 
@@ -64,7 +65,7 @@ class ForGetter:
         return self.source[start:end]
 
     def scan_source(self) -> list[tuple[For, bool]]:
-        result = for_whole.scanString(text)
+        result = for_whole.scanString(self.source)
         reslist = list(result)
         forlist: list[tuple[For, bool]] = []
         for res, i, j in reslist:
@@ -100,7 +101,23 @@ class ForGetter:
             input_string += self.remove_pragma(gotten) + '\n'
         return input_string
 
+    def to_json(self, forstate: tuple[For, bool], index: int) -> str:
+        state, target = forstate
+        start, end = state.location()
+        gotten = self.get_text(start, end)
+        func = self.remove_pragma(gotten)
+        targetnum = 1 if target else 0
+        resdict = {
+            "project": "test",
+            "commit_id": "kari",
+            "target": targetnum,
+            "func": func,
+            "index": index
+        }
+        return json.dumps(resdict)
 
+
+"""
 # test
 path = "sample1.c"
 with open(path, 'r') as f:
@@ -109,4 +126,7 @@ with open(path, 'r') as f:
 getter = ForGetter(text)
 forlist = getter.scan_source()
 print(len(forlist))
-print(getter.to_input_string(forlist))
+# print(getter.to_input_string(forlist))
+for ind, fo in enumerate(forlist):
+    print(getter.to_json(fo, ind))
+"""
