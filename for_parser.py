@@ -65,7 +65,8 @@ class ForGetter:
         return self.source[start:end]
 
     def scan_source(self) -> list[tuple[For, bool]]:
-        result = for_whole.scanString(self.source)
+        #result = for_whole.scanString(self.source)
+        result = statement.scanString(self.source)
         reslist = list(result)
         forlist: list[tuple[For, bool]] = []
         for res, i, j in reslist:
